@@ -1,0 +1,7 @@
+INSERT INTO `Teacher` (`TeacherName`, `TeacherSurname`, `TeacherEmail`, `TeacherPhone`, `TeacherDoB`, `TeacherSex`, `TeacherBranchID`)
+SELECT "name", "surname", "asds", 12345, '200-01-01', 'M', lb.LessonBranchID FROM LessonBranch lb
+WHERE(
+	lb.LessonBranchName = "Maths"
+)
+;
+

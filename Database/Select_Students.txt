@@ -1,0 +1,12 @@
+SELECT s.StudentID,s.StudentName,s.StudentSurname,s.StudentEmail,s.StudentPhone,
+s.StudentDoB,s.Sex,g.GuardianName,g.GuardianSurname,g.GuardianPhone,CONCAT(c.ClassYear,'-',c.ClassLetter) as Class
+FROM Student s,Class c,Guardian g 
+WHERE (
+	
+    g.GuardianID = s.GuardianID
+	AND
+    c.ClassID = s.ClassID
+	
+)
+
+

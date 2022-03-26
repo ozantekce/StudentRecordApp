@@ -1,0 +1,2 @@
+INSERT INTO `Class` (`ClassYear`, `ClassLetter`) 
+VALUES ('1', 'A')

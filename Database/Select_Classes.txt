@@ -1,0 +1,4 @@
+SELECT * 
+FROM `Class` 
+WHERE 1
+ORDER BY ClassYear, ClassLetter

@@ -1,0 +1,18 @@
+INSERT INTO Guardian (Guardian.GuardianName,Guardian.GuardianSurname,Guardian.GuardianPhone) 
+SELECT * FROM (SELECT 'Rupert', 'deneme', '123') AS tmp
+WHERE NOT EXISTS (
+    SELECT GuardianID FROM Guardian WHERE Guardian.GuardianPhone = '123'
+) LIMIT 1;
+
+
+
+INSERT INTO `Student` (`ClassID`, `StudentName`, `StudentSurname`, `StudentEmail`, `StudentPhone`, `StudentDoB`, `Sex`, `GuardianID`) 
+	select  Class.ClassID, "Deneme", "Deneme", "Deneme", 123456789, '2000-01-01', 'M', GuardianID
+	from Guardian,Class
+	where (
+    	Guardian.GuardianPhone = '123'
+        AND
+        Class.ClassYear = '1'
+        AND
+        Class.ClassLetter = 'A'
+    )

@@ -1,0 +1,7 @@
+SELECT `TeacherID`,`TeacherName`,`TeacherSurname`,`TeacherEmail`,`TeacherPhone`,`TeacherDoB`,`TeacherSex`,LessonBranch.LessonBranchName
+FROM Teacher,LessonBranch
+WHERE(
+	
+    TeacherBranchID = LessonBranch.LessonBranchID
+	
+)

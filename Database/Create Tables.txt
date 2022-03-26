@@ -1,0 +1,235 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+
+DROP TABLE IF EXISTS Class,Exam,Grade,Guardian,Lesson,LessonBranch,Student,Syllabus,Teacher;
+
+
+CREATE TABLE `Class` (
+  `ClassID` int NOT NULL,
+  `ClassYear` enum('1','2','3','4') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ClassLetter` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+INSERT INTO `Class` (`ClassID`, `ClassYear`, `ClassLetter`) VALUES
+(3, '2', 'A'),
+(2, '1', 'B'),
+(1, '1', 'A');
+
+
+
+
+CREATE TABLE `Exam` (
+  `ExamID` int NOT NULL,
+  `LessonID` int DEFAULT NULL,
+  `ExamName` varchar(50) DEFAULT NULL,
+  `Year` int DEFAULT NULL,
+  `ExamDate` date DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+CREATE TABLE `Grade` (
+  `GradeID` int NOT NULL,
+  `ExamID` int DEFAULT NULL,
+  `StudentID` int DEFAULT NULL,
+  `Grade` int DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `Guardian` (
+  `GuardianID` int NOT NULL,
+  `GuardianName` varchar(50) DEFAULT NULL,
+  `GuardianSurname` varchar(50) DEFAULT NULL,
+  `GuardianPhone` bigint DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+INSERT INTO `Guardian` (`GuardianID`, `GuardianName`, `GuardianSurname`, `GuardianPhone`) VALUES
+(16, 'Ismail', 'Akilli', 133213),
+(1, 'Cafer', 'Gul', 4545547);
+
+
+
+CREATE TABLE `Lesson` (
+  `LessonID` int NOT NULL,
+  `LessonBranchID` int DEFAULT NULL,
+  `LessonYear` enum('1','2','3','4') DEFAULT NULL,
+  `Semester` enum('1','2') DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+INSERT INTO `Lesson` (`LessonID`, `LessonBranchID`, `LessonYear`, `Semester`) VALUES
+(10, 5, '1', '2'),
+(9, 5, '1', '1'),
+(8, 1, '1', '2'),
+(1, 1, '1', '1');
+
+
+
+CREATE TABLE `LessonBranch` (
+  `LessonBranchID` int NOT NULL,
+  `LessonBranchName` varchar(50) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Tablo döküm verisi `LessonBranch`
+--
+
+INSERT INTO `LessonBranch` (`LessonBranchID`, `LessonBranchName`) VALUES
+(1, 'Maths'),
+(2, 'Biology'),
+(3, 'Physics'),
+(4, 'Chemistry'),
+(5, 'History');
+
+
+
+CREATE TABLE `Student` (
+  `StudentID` int NOT NULL,
+  `ClassID` int DEFAULT NULL,
+  `StudentName` varchar(50) DEFAULT NULL,
+  `StudentSurname` varchar(50) DEFAULT NULL,
+  `StudentEmail` varchar(50) DEFAULT NULL,
+  `StudentPhone` bigint DEFAULT NULL,
+  `StudentDoB` date DEFAULT NULL,
+  `Sex` enum('M','F') DEFAULT NULL,
+  `GuardianID` int DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+INSERT INTO `Student` (`StudentID`, `ClassID`, `StudentName`, `StudentSurname`, `StudentEmail`, `StudentPhone`, `StudentDoB`, `Sex`, `GuardianID`) VALUES
+(1, 1, 'Hasan', 'Gul', 'hgul@notmail.com', 4575425, '2000-03-16', 'M', 1),
+(21, 2, 'Fatma', 'Gul', 'fgul@notmail.com', 487874, '2022-03-26', 'F', 1),
+(22, 3, 'Ali', 'Akil', 'fgul@notmail.com', 121212, '2022-03-26', 'M', 16);
+
+
+
+CREATE TABLE `Syllabus` (
+  `SyllabusID` int NOT NULL,
+  `ClassID` int DEFAULT NULL,
+  `LessonID` int DEFAULT NULL,
+  `TeacherID` int DEFAULT NULL,
+  `Day` enum('Mon','Tue','Wed','Thu','Fri') DEFAULT NULL,
+  `Hour` enum('1','2','3','4','5','6') DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+CREATE TABLE `Teacher` (
+  `TeacherID` int NOT NULL,
+  `TeacherName` varchar(50) DEFAULT NULL,
+  `TeacherSurname` varchar(50) DEFAULT NULL,
+  `TeacherEmail` varchar(50) DEFAULT NULL,
+  `TeacherPhone` bigint DEFAULT NULL,
+  `TeacherDoB` date DEFAULT NULL,
+  `TeacherSex` enum('M','F') DEFAULT NULL,
+  `TeacherBranchID` int DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+INSERT INTO `Teacher` (`TeacherID`, `TeacherName`, `TeacherSurname`, `TeacherEmail`, `TeacherPhone`, `TeacherDoB`, `TeacherSex`, `TeacherBranchID`) VALUES
+(6, 'Canan', 'Acar', 'cacar@notmail.com', 485475, '2022-03-26', 'F', 5),
+(1, 'Nuri', 'Dag', 'ndag@notmail.com', 4575644, '1980-03-01', 'M', 1);
+
+
+
+ALTER TABLE `Class`
+  ADD PRIMARY KEY (`ClassID`),
+  ADD UNIQUE KEY `ClassYear` (`ClassYear`,`ClassLetter`);
+
+
+ALTER TABLE `Exam`
+  ADD PRIMARY KEY (`ExamID`),
+  ADD KEY `LessonID` (`LessonID`);
+
+
+ALTER TABLE `Grade`
+  ADD PRIMARY KEY (`GradeID`),
+  ADD KEY `ExamID` (`ExamID`),
+  ADD KEY `StudentID` (`StudentID`);
+
+
+ALTER TABLE `Guardian`
+  ADD PRIMARY KEY (`GuardianID`);
+
+
+ALTER TABLE `Lesson`
+  ADD PRIMARY KEY (`LessonID`),
+  ADD UNIQUE KEY `LessonBranchID` (`LessonBranchID`,`LessonYear`,`Semester`);
+
+
+ALTER TABLE `LessonBranch`
+  ADD PRIMARY KEY (`LessonBranchID`),
+  ADD UNIQUE KEY `LessonBranchName` (`LessonBranchName`),
+  ADD UNIQUE KEY `LessonBranchName_2` (`LessonBranchName`);
+
+
+ALTER TABLE `Student`
+  ADD PRIMARY KEY (`StudentID`),
+  ADD KEY `GuardianID` (`GuardianID`),
+  ADD KEY `ClassID` (`ClassID`);
+
+
+ALTER TABLE `Syllabus`
+  ADD PRIMARY KEY (`SyllabusID`),
+  ADD UNIQUE KEY `ClassID` (`ClassID`,`Day`,`Hour`),
+  ADD KEY `LessonID` (`LessonID`),
+  ADD KEY `TeacherID` (`TeacherID`);
+
+
+ALTER TABLE `Teacher`
+  ADD PRIMARY KEY (`TeacherID`),
+  ADD KEY `TeacherBranchID` (`TeacherBranchID`);
+
+
+ALTER TABLE `Class`
+  MODIFY `ClassID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+
+ALTER TABLE `Exam`
+  MODIFY `ExamID` int NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE `Grade`
+  MODIFY `GradeID` int NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE `Guardian`
+  MODIFY `GuardianID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+
+ALTER TABLE `Lesson`
+  MODIFY `LessonID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+
+ALTER TABLE `LessonBranch`
+  MODIFY `LessonBranchID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+
+ALTER TABLE `Student`
+  MODIFY `StudentID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+
+ALTER TABLE `Syllabus`
+  MODIFY `SyllabusID` int NOT NULL AUTO_INCREMENT;
+
+
+ALTER TABLE `Teacher`
+  MODIFY `TeacherID` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

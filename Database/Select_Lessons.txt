@@ -1,0 +1,4 @@
+SELECT LessonID,lb.LessonBranchName,LessonYear,Semester FROM `Lesson`, LessonBranch lb 
+WHERE (
+	Lesson.LessonBranchID = lb.LessonBranchID
+)
